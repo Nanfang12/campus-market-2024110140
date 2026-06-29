@@ -42,6 +42,20 @@ const router = createRouter({
       path: '/board',
       name: 'Board',
       component: () => import('@/views/BoardView.vue')
+    },    {
+      path: '/lostfound',
+      name: 'LostFound',
+      component: () => import('@/views/LostFoundView.vue')
+    },
+    {
+      path: '/groupbuy',
+      name: 'GroupBuy',
+      component: () => import('@/views/GroupBuyView.vue')
+    },
+    {
+      path: '/errand',
+      name: 'Errand',
+      component: () => import('@/views/ErrandView.vue')
     }
   ]
 })

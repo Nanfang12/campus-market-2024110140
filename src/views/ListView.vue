@@ -1,60 +1,20 @@
-<script setup lang="ts">
-// 商品新增 price、publisherId 字段
-const goodsList = [
-  {
-    id: 1001,
-    name: '遮光床帘',
-    price: 45,
-    publisherId: 'stu_2025001',
-    desc: '上铺加厚遮光床帘，九成新，宿舍自用，全套支架配件齐全'
-  },
-  {
-    id: 1002,
-    name: '定妆散粉',
-    price: 32,
-    publisherId: 'stu_2025002',
-    desc: '大牌控油散粉，余量大半盒，油皮持妆好用，个人保真闲置转出'
-  },
-  {
-    id: 1003,
-    name: '四色大地眼影盘',
-    price: 28,
-    publisherId: 'stu_2025003',
-    desc: '日常百搭色系，几乎全新，新手好上手，消肿日常妆都合适'
-  },
-  {
-    id: 1004,
-    name: '哑光修容盘',
-    price: 25,
-    publisherId: 'stu_2025001',
-    desc: '脸部阴影修容，用量很少，修饰轮廓自然，粉质细腻不结块'
-  },
-  {
-    id: 1005,
-    name: '加厚塑料洗脸盆',
-    price: 8,
-    publisherId: 'stu_2025004',
-    desc: '大号洗衣洗脸两用盆，无开裂破损，搬家闲置便宜出'
-  },
-  {
-    id: 1006,
-    name: '落地折叠晾衣架',
-    price: 35,
-    publisherId: 'stu_2025002',
-    desc: '可伸缩落地衣架，晒衣服被子稳固不晃，宿舍租房很实用'
-  }
-]
-</script>
-
 <template>
   <div class="page-wrap">
     <h1 class="page-title">商品列表页</h1>
-    <div class="goods-wrap">
-      <div class="goods-card" v-for="item in goodsList" :key="item.id">
-        <div class="goods-name">{{ item.name }}</div>
+
+    <!-- 数据为空展示空状态 -->
+    <EmptyState
+      v-if="trades.length === 0"
+      text="暂无二手交易信息"
+    />
+
+    <!-- 有数据渲染卡片列表 -->
+    <div class="goods-wrap" v-else>
+      <div class="goods-card" v-for="item in trades" :key="item.id">
+        <div class="goods-name">{{ item.title }}</div>
         <div class="goods-price">售价：¥{{ item.price }}</div>
-        <div class="goods-pub">发布人ID：{{ item.publisherId }}</div>
-        <div class="goods-desc">{{ item.desc }}</div>
+        <div class="goods-pub">发布人：{{ item.publisher }}</div>
+        <div class="goods-desc">{{ item.description }}</div>
         <div class="card-bottom">
           <router-link :to="`/detail/${item.id}`" class="detail-btn">查看详情</router-link>
         </div>
@@ -62,6 +22,23 @@ const goodsList = [
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+// 引入空状态组件
+import EmptyState from '@/components/EmptyState.vue'
+// 引入接口请求方法 + 类型定义
+import { getTrades, type TradeItem } from '@/api/trade'
+
+// 定义接收接口数据的数组
+const trades = ref<TradeItem[]>([])
+
+// 页面挂载时请求后端数据
+onMounted(async () => {
+  const res = await getTrades()
+  trades.value = res.data
+})
+</script>
 
 <style scoped>
 .page-wrap {

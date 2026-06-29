@@ -1,66 +1,21 @@
 <script setup lang="ts">
+// useRoute 属于 vue-router
 import { useRoute } from 'vue-router'
+// ref、onMounted 属于 vue
+import { onMounted, ref } from 'vue'
+import { getTrades } from '@/api/trade'
+import type { TradeItem } from '@/api/trade'
+
 const route = useRoute()
-const goodsId = Number(route.params.id)
+const targetId = Number(route.params.id)
+const currentGoods = ref<TradeItem | null>(null)
 
-const goodsList = [
-  {
-    id: 1001,
-    name: '遮光床帘',
-    price: 45,
-    publisherId: 'stu_2025001',
-    desc: '上铺加厚遮光床帘，九成新，宿舍自用，全套支架配件齐全',
-    trade: '线下宿舍自提，也可校内顺路配送',
-    detail: '使用半年左右，遮光效果好，安装配件完整，无破损污渍，性价比很高'
-  },
-  {
-    id: 1002,
-    name: '定妆散粉',
-    price: 32,
-    publisherId: 'stu_2025002',
-    desc: '大牌控油散粉，余量大半盒，油皮持妆好用，个人保真闲置转出',
-    trade: '线下宿舍自提',
-    detail: '控油磨皮效果优秀，适合混油、油皮，自用正品，保质期充足'
-  },
-  {
-    id: 1003,
-    name: '四色大地眼影盘',
-    price: 28,
-    publisherId: 'stu_2025003',
-    desc: '日常百搭色系，几乎全新，新手好上手，消肿日常妆都合适',
-    trade: '线下宿舍自提',
-    detail: '哑光+微闪搭配，通勤、日常妆百搭，几乎没怎么使用'
-  },
-  {
-    id: 1004,
-    name: '哑光修容盘',
-    price: 25,
-    publisherId: 'stu_2025001',
-    desc: '脸部阴影修容，用量很少，修饰轮廓自然，粉质细腻不结块',
-    trade: '线下宿舍自提',
-    detail: '灰调适合亚洲肤色，不显脏，修饰下颌线、鼻梁很自然'
-  },
-  {
-    id: 1005,
-    name: '加厚塑料洗脸盆',
-    price: 8,
-    publisherId: 'stu_2025004',
-    desc: '大号洗衣洗脸两用盆，无开裂破损，搬家闲置便宜出',
-    trade: '线下宿舍自提',
-    detail: '加厚材质结实耐用，可洗衣服、泡脚、洗脸，闲置低价处理'
-  },
-  {
-    id: 1006,
-    name: '落地折叠晾衣架',
-    price: 35,
-    publisherId: 'stu_2025002',
-    desc: '可伸缩落地衣架，晒衣服被子稳固不晃，宿舍租房很实用',
-    trade: '线下宿舍自提',
-    detail: '可折叠不占空间，承重强，晾晒衣物、被褥都很方便'
-  }
-]
-
-const currentGoods = goodsList.find(item => item.id === goodsId)
+onMounted(async () => {
+  const res = await getTrades()
+  // find 找不到返回 undefined，用 ?? 转为 null，匹配类型
+  const foundItem = res.data.find(item => item.id === targetId)
+  currentGoods.value = foundItem ?? null
+})
 </script>
 
 <template>
@@ -73,27 +28,31 @@ const currentGoods = goodsList.find(item => item.id === goodsId)
       </div>
       <div class="row-item">
         <span class="label">商品名称：</span>
-        <span class="value">{{ currentGoods.name }}</span>
+        <span class="value">{{ currentGoods.title }}</span>
       </div>
       <div class="row-item">
         <span class="label">售价：</span>
         <span class="value price-text">¥{{ currentGoods.price }}</span>
       </div>
       <div class="row-item">
-        <span class="label">发布人ID：</span>
-        <span class="value">{{ currentGoods.publisherId }}</span>
+        <span class="label">成色：</span>
+        <span class="value">{{ currentGoods.condition }}</span>
       </div>
       <div class="row-item">
-        <span class="label">交易方式：</span>
-        <span class="value">{{ currentGoods.trade }}</span>
+        <span class="label">交易地点：</span>
+        <span class="value">{{ currentGoods.location }}</span>
       </div>
       <div class="row-item">
-        <span class="label">简短介绍：</span>
-        <span class="value">{{ currentGoods.desc }}</span>
+        <span class="label">发布人：</span>
+        <span class="value">{{ currentGoods.publisher }}</span>
+      </div>
+      <div class="row-item">
+        <span class="label">发布时间：</span>
+        <span class="value">{{ currentGoods.publishTime }}</span>
       </div>
       <div class="row-item">
         <span class="label">详细描述：</span>
-        <span class="value">{{ currentGoods.detail }}</span>
+        <span class="value">{{ currentGoods.description }}</span>
       </div>
     </div>
   </div>
