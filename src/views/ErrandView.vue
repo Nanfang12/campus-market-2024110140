@@ -5,12 +5,18 @@
       <p>发布代取快递、代买代办任务，互帮互助赚小额酬劳。</p>
     </div>
     <div class="list">
-      <div class="goods-card" v-for="item in errandList" :key="item.id">
+      <router-link
+        v-for="item in errandList"
+        :key="item.id"
+        :to="`/errand/${item.id}`"
+        class="goods-card"
+      >
         <div class="goods-name">{{ item.title }}</div>
+        <div class="goods-tag">{{ item.nickname || item.publisher }}</div>
         <div class="goods-price">酬劳：¥{{ item.reward }}</div>
         <div class="goods-pub">路线：{{ item.from }} → {{ item.to }}</div>
         <div class="goods-desc">{{ item.description }}</div>
-      </div>
+      </router-link>
     </div>
   </section>
 </template>
@@ -50,15 +56,18 @@ onMounted(async () => {
   gap: 16px;
 }
 .goods-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 20px;
-  transition: all 0.25s ease;
+  border-radius: 18px;
+  padding: 22px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   background: #ffffff;
 }
 .goods-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(64, 158, 255, 0.16);
+  box-shadow: 0 18px 34px rgba(64, 158, 255, 0.18);
   border-color: #409eff;
 }
 .goods-name {

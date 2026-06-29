@@ -4,14 +4,16 @@
       "id": 1,
       "title": "九成新机械键盘",
       "category": "数码配件",
-      "price": 89,
+      "price": 100,
       "condition": "九成新",
       "location": "东区宿舍",
       "publisher": "软件工程 2023 级学生",
       "publishTime": "2026-06-01 10:20",
-      "image": "",
+      "image": "https://via.placeholder.com/520x320/ebf4ff/333333?text=校园交易",
       "status": "open",
-      "description": "键盘使用正常，因更换设备转让。"
+      "description": "键盘使用正常，因更换设备转让。",
+      "publishingTime": "2026-06-01 10:20",
+      "nickname": "软件工程 2023 级学生"
     },
     {
       "id": 2,
@@ -22,9 +24,11 @@
       "location": "图书馆门口",
       "publisher": "数学学院学生",
       "publishingTime": "2026-06-01 14:30",
-      "image": "",
+      "image": "https://via.placeholder.com/520x320/ebf4ff/333333?text=校园交易",
       "status": "open",
-      "description": "教材有少量笔记，不影响使用。"
+      "description": "教材有少量笔记，不影响使用。",
+      "publishTime": "2026-06-01 14:30",
+      "nickname": "数学学院学生"
     },
     {
       "id": 3,
@@ -35,9 +39,11 @@
       "location": "南区3栋宿舍",
       "publisher": "计算机2班学生",
       "publishingTime": "2026-06-02 09:15",
-      "image": "",
+      "image": "https://via.placeholder.com/520x320/ebf4ff/333333?text=校园交易",
       "status": "open",
-      "description": "续航完好，无磕碰，配件齐全。"
+      "description": "续航完好，无磕碰，配件齐全。",
+      "publishTime": "2026-06-02 09:15",
+      "nickname": "计算机2班学生"
     },
     {
       "id": 4,
@@ -48,9 +54,11 @@
       "location": "教学楼B区大厅",
       "publisher": "经管学院学生",
       "publishingTime": "2026-06-02 16:40",
-      "image": "",
+      "image": "https://via.placeholder.com/520x320/ebf4ff/333333?text=校园交易",
       "status": "closed",
-      "description": "真题卷+解析册，适合备考四级。"
+      "description": "真题卷+解析册，适合备考四级。",
+      "publishTime": "2026-06-02 16:40",
+      "nickname": "经管学院学生"
     },
     {
       "id": 5,
@@ -61,9 +69,11 @@
       "location": "西区7栋宿舍",
       "publisher": "汉语言专业学生",
       "publishingTime": "2026-06-03 11:22",
-      "image": "",
+      "image": "https://via.placeholder.com/520x320/ebf4ff/333333?text=校园交易",
       "status": "open",
-      "description": "稳固不晃，宿舍床上看书追剧很合适。"
+      "description": "稳固不晃，宿舍床上看书追剧很合适。",
+      "publishTime": "2026-06-03 11:22",
+      "nickname": "汉语言专业学生"
     },
     {
       "id": 6,
@@ -74,9 +84,11 @@
       "location": "学校羽毛球场",
       "publisher": "体育选修课学生",
       "publishingTime": "2026-06-03 15:10",
-      "image": "",
+      "image": "https://via.placeholder.com/520x320/ebf4ff/333333?text=校园交易",
       "status": "open",
-      "description": "拍子线完好，附赠3个羽毛球。"
+      "description": "拍子线完好，附赠3个羽毛球。",
+      "publishTime": "2026-06-03 15:10",
+      "nickname": "体育选修课学生"
     }
   ],
   "lostFounds": [
@@ -89,7 +101,10 @@
       "eventTime": "2026-06-02 12:10",
       "contact": "站内消息联系",
       "status": "open",
-      "description": "校园卡卡套为黑色，内有学生证。"
+      "description": "校园卡卡套为黑色，内有学生证。",
+      "publisher": "校园用户",
+      "nickname": "失主",
+      "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
     },
     {
       "id": 2,
@@ -100,7 +115,10 @@
       "eventTime": "2026-06-02 18:40",
       "contact": "站内消息联系",
       "status": "open",
-      "description": "雨伞放在 A 区一楼值班室。"
+      "description": "雨伞放在 A 区一楼值班室。",
+      "publisher": "校园用户",
+      "nickname": "失主",
+      "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
     },
     {
       "id": 3,
@@ -111,7 +129,10 @@
       "eventTime": "2026-06-03 08:55",
       "contact": "站内消息联系",
       "status": "open",
-      "description": "白色Type-C接口耳机，放在桌面遗忘带走。"
+      "description": "白色Type-C接口耳机，放在桌面遗忘带走。",
+      "publisher": "校园用户",
+      "nickname": "失主",
+      "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
     },
     {
       "id": 4,
@@ -122,7 +143,10 @@
       "eventTime": "2026-06-03 12:30",
       "contact": "站内消息联系核对信息",
       "status": "open",
-      "description": "包含宿舍钥匙+柜子钥匙，带小熊挂件。"
+      "description": "包含宿舍钥匙+柜子钥匙，带小熊挂件。",
+      "publisher": "校园用户",
+      "nickname": "失主",
+      "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
     },
     {
       "id": 5,
@@ -133,7 +157,10 @@
       "eventTime": "2026-06-03 17:20",
       "contact": "站内私信认领",
       "status": "closed",
-      "description": "500ml透明水杯，杯身有贴纸装饰。"
+      "description": "500ml透明水杯，杯身有贴纸装饰。",
+      "publisher": "校园用户",
+      "nickname": "失主",
+      "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
     },
     {
       "id": 6,
@@ -144,7 +171,10 @@
       "eventTime": "2026-06-04 09:10",
       "contact": "核对姓名后认领",
       "status": "open",
-      "description": "封面黑色，里面记有高数课堂笔记。"
+      "description": "封面黑色，里面记有高数课堂笔记。",
+      "publisher": "校园用户",
+      "nickname": "失主",
+      "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
     }
   ],
   "groupBuys": [
@@ -158,7 +188,8 @@
       "location": "学校南门",
       "publisher": "计算机学院学生",
       "status": "open",
-      "description": "AA 制，人数够后统一预约。"
+      "description": "AA 制，人数够后统一预约。",
+      "activityInfo": "拼单活动：周五晚火锅拼单，请在截止日期前参与，达到人数后统一组织。"
     },
     {
       "id": 2,
@@ -170,7 +201,8 @@
       "location": "线上确认",
       "publisher": "外国语学院学生",
       "status": "open",
-      "description": "达到人数后统一下单。"
+      "description": "达到人数后统一下单。",
+      "activityInfo": "拼单活动：四六级资料团购，请在截止日期前参与，达到人数后统一组织。"
     },
     {
       "id": 3,
@@ -182,7 +214,8 @@
       "location": "东门自提点",
       "publisher": "生活班委",
       "status": "open",
-      "description": "整车拿货更便宜，按需拼团购买。"
+      "description": "整车拿货更便宜，按需拼团购买。",
+      "activityInfo": "拼单活动：夏日西瓜团购批发，请在截止日期前参与，达到人数后统一组织。"
     },
     {
       "id": 4,
@@ -194,7 +227,8 @@
       "location": "学校北门奶茶店",
       "publisher": "宿舍团长",
       "status": "open",
-      "description": "满30减12，凑单下单更划算。"
+      "description": "满30减12，凑单下单更划算。",
+      "activityInfo": "拼单活动：奶茶拼单满减活动，请在截止日期前参与，达到人数后统一组织。"
     },
     {
       "id": 5,
@@ -206,7 +240,8 @@
       "location": "图书馆门口分发",
       "publisher": "考研互助小组",
       "status": "open",
-      "description": "批量采购价格更低，全套真题带解析。"
+      "description": "批量采购价格更低，全套真题带解析。",
+      "activityInfo": "拼单活动：考研英语真题团购，请在截止日期前参与，达到人数后统一组织。"
     },
     {
       "id": 6,
@@ -218,7 +253,8 @@
       "location": "各宿舍楼下配送",
       "publisher": "楼栋生活干事",
       "status": "closed",
-      "description": "一次性订十桶有优惠，凑单配送上门。"
+      "description": "一次性订十桶有优惠，凑单配送上门。",
+      "activityInfo": "拼单活动：宿舍桶装水拼订，请在截止日期前参与，达到人数后统一组织。"
     }
   ],
   "errands": [
@@ -232,7 +268,8 @@
       "deadline": "2026-06-03 19:00",
       "publisher": "西区学生",
       "status": "open",
-      "description": "快递较轻，送到宿舍楼下即可。"
+      "description": "快递较轻，送到宿舍楼下即可。",
+      "nickname": "西区学生"
     },
     {
       "id": 2,
@@ -244,7 +281,8 @@
       "deadline": "2026-06-03 18:30",
       "publisher": "实验室学生",
       "status": "open",
-      "description": "需要在 18:30 前送到。"
+      "description": "需要在 18:30 前送到。",
+      "nickname": "实验室学生"
     },
     {
       "id": 3,
@@ -256,7 +294,8 @@
       "deadline": "2026-06-04 17:00",
       "publisher": "有事外出学生",
       "status": "open",
-      "description": "两本书，帮忙归还避免超期扣费。"
+      "description": "两本书，帮忙归还避免超期扣费。",
+      "nickname": "有事外出学生"
     },
     {
       "id": 4,
@@ -268,7 +307,8 @@
       "deadline": "2026-06-04 12:20",
       "publisher": "上课赶不及学生",
       "status": "open",
-      "description": "饭点走不开，帮忙取上楼。"
+      "description": "饭点走不开，帮忙取上楼。",
+      "nickname": "上课赶不及学生"
     },
     {
       "id": 5,
@@ -280,7 +320,8 @@
       "deadline": "2026-06-05 10:00",
       "publisher": "早起赶作业学生",
       "status": "open",
-      "description": "需要中性笔、草稿本，买完送货上门。"
+      "description": "需要中性笔、草稿本，买完送货上门。",
+      "nickname": "早起赶作业学生"
     },
     {
       "id": 6,
@@ -292,7 +333,8 @@
       "deadline": "2026-06-05 15:00",
       "publisher": "跨校区同学",
       "status": "closed",
-      "description": "小件文件，需要往返两校区递送。"
+      "description": "小件文件，需要往返两校区递送。",
+      "nickname": "跨校区同学"
     }
   ]
 }

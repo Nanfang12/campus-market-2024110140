@@ -1,7 +1,12 @@
 <template>
   <article class="item-card">
+    <img v-if="image" :src="image" alt="卡片图片" class="item-card__image" />
+
     <div class="item-card__header">
-      <h3>{{ title }}</h3>
+      <div>
+        <h3>{{ title }}</h3>
+        <p v-if="subtitle" class="subtitle">{{ subtitle }}</p>
+      </div>
       <span v-if="tag" class="tag">{{ tag }}</span>
     </div>
 
@@ -23,6 +28,8 @@ defineProps<{
   title: string
   description: string
   tag?: string
+  subtitle?: string
+  image?: string
   location?: string
   time?: string
 }>()
@@ -30,17 +37,31 @@ defineProps<{
 
 <style scoped>
 .item-card {
-  padding: 18px;
-  border-radius: 12px;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: #ffffff;
+  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.06);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.item-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
+}
+
+.item-card__image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
 }
 
 .item-card__header {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  align-items: center;
+  align-items: flex-start;
+  padding: 18px 18px 8px;
 }
 
 .item-card h3 {
@@ -48,12 +69,19 @@ defineProps<{
   font-size: 18px;
 }
 
+.subtitle {
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
 .tag {
-  padding: 4px 8px;
+  padding: 6px 12px;
   border-radius: 999px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: rgba(51, 102, 255, 0.12);
+  color: #1d4ed8;
   font-size: 12px;
+  font-weight: 600;
 }
 
 .description {

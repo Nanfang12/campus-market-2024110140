@@ -5,12 +5,20 @@
       <p>参与校园拼单，分摊成本，团购更划算。</p>
     </div>
     <div class="list">
-      <div class="goods-card" v-for="item in groupList" :key="item.id">
+      <router-link
+        v-for="item in groupList"
+        :key="item.id"
+        :to="`/group-buy/${item.id}`"
+        class="goods-card"
+      >
         <div class="goods-name">{{ item.title }}</div>
+        <div class="goods-tag">{{ item.type }}</div>
+        <div class="goods-pub">发起人：{{ item.publisher }}</div>
         <div class="goods-price">人数：{{ item.currentCount }}/{{ item.targetCount }}</div>
         <div class="goods-pub">截止时间：{{ item.deadline }}</div>
+        <div class="goods-summary">{{ item.activityInfo || '请在截止时间前加入，拼单成功后统一联系发起人。' }}</div>
         <div class="goods-desc">{{ item.description }}</div>
-      </div>
+      </router-link>
     </div>
   </section>
 </template>
@@ -50,15 +58,18 @@ onMounted(async () => {
   gap: 16px;
 }
 .goods-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 20px;
-  transition: all 0.25s ease;
+  border-radius: 18px;
+  padding: 22px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   background: #ffffff;
 }
 .goods-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(64, 158, 255, 0.16);
+  box-shadow: 0 18px 34px rgba(64, 158, 255, 0.18);
   border-color: #409eff;
 }
 .goods-name {

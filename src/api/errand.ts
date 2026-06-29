@@ -9,6 +9,7 @@ export interface ErrandItem {
   to: string
   deadline: string
   publisher: string
+  nickname?: string
   status: string
   description: string
 }

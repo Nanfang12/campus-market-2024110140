@@ -9,6 +9,7 @@ export interface GroupBuyItem {
   deadline: string
   location: string
   publisher: string
+  activityInfo?: string
   status: string
   description: string
 }

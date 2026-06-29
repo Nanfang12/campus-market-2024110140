@@ -8,6 +8,7 @@ export interface TradeItem {
   condition: string
   location: string
   publisher: string
+  nickname?: string
   publishTime: string
   image: string
   status: string

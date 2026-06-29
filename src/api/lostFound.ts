@@ -8,6 +8,9 @@ export interface LostFoundItem {
   location: string
   eventTime: string
   contact: string
+  publisher?: string
+  nickname?: string
+  image?: string
   status: string
   description: string
 }
