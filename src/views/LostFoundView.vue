@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { getLostFounds, type LostFoundItem } from '@/api/lostFound'
 
 // 安全地解析图片字符串
@@ -38,7 +38,18 @@ function parseImage(img: string | null | undefined): [string, string] {
   return ['🔍', img]
 }
 
-const lostList = ref<LostFoundItem[]>(getLostFounds())
+const lostList = ref<LostFoundItem[]>([])
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    lostList.value = await getLostFounds()
+  } catch {
+    // 静默处理
+  } finally {
+    loading.value = false
+  }
+})
 </script>
 
 <style scoped>

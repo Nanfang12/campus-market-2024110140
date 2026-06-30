@@ -1,8 +1,19 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { getMessages, type MessageItem } from '../api/message'
-import { computed } from 'vue'
 
-const messages = computed<MessageItem[]>(() => getMessages())
+const messages = ref<MessageItem[]>([])
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    messages.value = await getMessages()
+  } catch {
+    // 静默处理
+  } finally {
+    loading.value = false
+  }
+})
 </script>
 
 <template>

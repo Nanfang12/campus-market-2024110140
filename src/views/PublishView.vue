@@ -152,7 +152,7 @@ async function handleSubmit() {
         status: 'open',
         description: form.description,
       })
-      pushMessage({
+      await pushMessage({
         sender: '系统通知',
         title: '📦 二手商品发布成功',
         content: `你发布的《${form.title}》已上架校园集市，售价 ¥${form.price}，同学现在可以浏览并联系你了。`,
@@ -173,7 +173,7 @@ async function handleSubmit() {
         status: 'open',
         description: form.description,
       })
-      pushMessage({
+      await pushMessage({
         sender: '系统通知',
         title: form.lostFoundType === 'lost' ? '🔍 寻物启事发布成功' : '🔎 拾物招领发布成功',
         content: `你发布的《${form.title}》已上线，物品：${form.itemName}，地点：${form.location}，请耐心等待回复。`,
@@ -194,7 +194,7 @@ async function handleSubmit() {
         status: 'open',
         description: form.description,
       })
-      pushMessage({
+      await pushMessage({
         sender: '系统通知',
         title: '🧋 拼单搭子发布成功',
         content: `你发起的《${form.title}》已发布，目标 ${form.targetCount} 人，欢迎邀请同学一起参加！`,
@@ -215,7 +215,7 @@ async function handleSubmit() {
         status: 'open',
         description: form.description,
       })
-      pushMessage({
+      await pushMessage({
         sender: '系统通知',
         title: '🏃 跑腿委托发布成功',
         content: `你发布的《${form.title}》已上线，酬劳 ¥${form.reward}，路线：${form.from} → ${form.to}，等待同学接单。`,

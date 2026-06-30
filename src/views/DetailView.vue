@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { getTrades, type TradeItem } from '@/api/trade'
 import { getLostFounds, type LostFoundItem } from '@/api/lostFound'
@@ -8,7 +8,7 @@ import { getErrands, type ErrandItem } from '@/api/errand'
 import { getMessages, type MessageItem } from '@/api/message'
 
 const route = useRoute()
-const targetId = Number(route.params.id)
+const targetId = String(route.params.id)
 const itemType = String(route.meta.type || '')
 
 // 安全解析图片字符串
@@ -21,24 +21,41 @@ function parseImage(img: string | null | undefined): [string, string] {
   return ['📷', img]
 }
 
-// 根据 itemType 只查找对应类型的条目（避免多列表 ID 冲突）
-const tradeItem = ref<TradeItem | null>(
-  itemType === 'trade' ? (getTrades().find(item => item.id === targetId) ?? null) : null
-)
-const lostItem = ref<LostFoundItem | null>(
-  itemType === 'lostFound' ? (getLostFounds().find(item => item.id === targetId) ?? null) : null
-)
-const groupItem = ref<GroupBuyItem | null>(
-  itemType === 'groupBuy' ? (getGroupBuys().find(item => item.id === targetId) ?? null) : null
-)
-const errandItem = ref<ErrandItem | null>(
-  itemType === 'errand' ? (getErrands().find(item => item.id === targetId) ?? null) : null
-)
-const messageItem = ref<MessageItem | null>(
-  itemType === 'message' ? (getMessages().find(item => item.id === targetId) ?? null) : null
-)
+const tradeItem = ref<TradeItem | null>(null)
+const lostItem = ref<LostFoundItem | null>(null)
+const groupItem = ref<GroupBuyItem | null>(null)
+const errandItem = ref<ErrandItem | null>(null)
+const messageItem = ref<MessageItem | null>(null)
+const loaded = ref(false)
 
-const notFound = !tradeItem.value && !lostItem.value && !groupItem.value && !errandItem.value && !messageItem.value
+onMounted(async () => {
+  try {
+    if (itemType === 'trade') {
+      const list = await getTrades()
+      tradeItem.value = list.find((item) => String(item.id) === targetId) ?? null
+    } else if (itemType === 'lostFound') {
+      const list = await getLostFounds()
+      lostItem.value = list.find((item) => String(item.id) === targetId) ?? null
+    } else if (itemType === 'groupBuy') {
+      const list = await getGroupBuys()
+      groupItem.value = list.find((item) => String(item.id) === targetId) ?? null
+    } else if (itemType === 'errand') {
+      const list = await getErrands()
+      errandItem.value = list.find((item) => String(item.id) === targetId) ?? null
+    } else if (itemType === 'message') {
+      const list = await getMessages()
+      messageItem.value = list.find((item) => String(item.id) === targetId) ?? null
+    }
+  } catch {
+    // 静默处理
+  } finally {
+    loaded.value = true
+  }
+})
+
+const notFound = computed(
+  () => loaded.value && !tradeItem.value && !lostItem.value && !groupItem.value && !errandItem.value && !messageItem.value
+)
 
 const pageTitle = computed(() => {
   switch (itemType) {

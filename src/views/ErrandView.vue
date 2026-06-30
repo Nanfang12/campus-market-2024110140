@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { getErrands, type ErrandItem } from '@/api/errand'
 
 // 安全地解析图片字符串（emoji + 文字）
@@ -37,7 +37,18 @@ function parseImage(img: string | null | undefined): [string, string] {
   return ['🏃', img]
 }
 
-const errandList = ref<ErrandItem[]>(getErrands())
+const errandList = ref<ErrandItem[]>([])
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    errandList.value = await getErrands()
+  } catch {
+    // 静默处理
+  } finally {
+    loading.value = false
+  }
+})
 </script>
 
 <style scoped>

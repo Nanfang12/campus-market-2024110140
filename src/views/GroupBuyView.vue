@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { getGroupBuys, type GroupBuyItem } from '@/api/groupBuy'
 
 // 安全地解析图片字符串
@@ -37,7 +37,18 @@ function parseImage(img: string | null | undefined): [string, string] {
   return ['🧋', img]
 }
 
-const groupList = ref<GroupBuyItem[]>(getGroupBuys())
+const groupList = ref<GroupBuyItem[]>([])
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    groupList.value = await getGroupBuys()
+  } catch {
+    // 静默处理
+  } finally {
+    loading.value = false
+  }
+})
 </script>
 
 <style scoped>

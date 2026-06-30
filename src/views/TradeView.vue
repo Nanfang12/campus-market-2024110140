@@ -32,11 +32,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import ItemCard from '../components/ItemCard.vue'
 import { getTrades, type TradeItem } from '../api/trade'
 
-const trades = ref<TradeItem[]>(getTrades())
+const trades = ref<TradeItem[]>([])
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    trades.value = await getTrades()
+  } catch {
+    // 加载失败时静默处理
+  } finally {
+    loading.value = false
+  }
+})
 </script>
 
 <style scoped>
