@@ -1,27 +1,53 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { getTrades } from '@/api/trade'
+import { getLostFounds } from '@/api/lostFound'
+import { getGroupBuys } from '@/api/groupBuy'
+import { getErrands } from '@/api/errand'
+
+// 统计变量
+const tradeTotal = ref(0)
+const lostFoundTotal = ref(0)
+const groupBuyTotal = ref(0)
+const errandTotal = ref(0)
+
+onMounted(async () => {
+  // 并行请求四个接口
+  const [resTrade, resLost, resGroup, resErrand] = await Promise.all([
+    getTrades(),
+    getLostFounds(),
+    getGroupBuys(),
+    getErrands()
+  ])
+  tradeTotal.value = resTrade.data.length
+  lostFoundTotal.value = resLost.data.length
+  groupBuyTotal.value = resGroup.data.length
+  errandTotal.value = resErrand.data.length
+})
+</script>
 
 <template>
   <div class="page-wrap">
     <h1 class="page-title">数据看板 · 统计概览</h1>
     <div class="stat-wrap">
       <div class="stat-card">
-        <div class="stat-label">商品总数量</div>
-        <div class="stat-num">128</div>
+        <div class="stat-label">二手商品总数</div>
+        <div class="stat-num">{{ tradeTotal }}</div>
         <div class="stat-unit">件</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">发布用户总数</div>
-        <div class="stat-num">36</div>
-        <div class="stat-unit">人</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">未读消息总数</div>
-        <div class="stat-num">9</div>
+        <div class="stat-label">失物招领总数</div>
+        <div class="stat-num">{{ lostFoundTotal }}</div>
         <div class="stat-unit">条</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">本周新增发布</div>
-        <div class="stat-num">23</div>
+        <div class="stat-label">拼团活动总数</div>
+        <div class="stat-num">{{ groupBuyTotal }}</div>
+        <div class="stat-unit">条</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">跑腿订单总数</div>
+        <div class="stat-num">{{ errandTotal }}</div>
         <div class="stat-unit">条</div>
       </div>
     </div>

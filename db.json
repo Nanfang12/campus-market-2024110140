@@ -1,7 +1,7 @@
 {
   "trades": [
     {
-      "id": 1,
+      "id": "1",
       "title": "九成新机械键盘",
       "category": "数码配件",
       "price": 100,
@@ -16,7 +16,7 @@
       "nickname": "软件工程 2023 级学生"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "高等数学教材",
       "category": "教材资料",
       "price": 18,
@@ -31,7 +31,7 @@
       "nickname": "数学学院学生"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "蓝牙耳机半入耳式",
       "category": "数码配件",
       "price": 75,
@@ -46,7 +46,7 @@
       "nickname": "计算机2班学生"
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "大学英语四级真题全套",
       "category": "教材资料",
       "price": 12,
@@ -61,7 +61,7 @@
       "nickname": "经管学院学生"
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "折叠懒人书桌床上款",
       "category": "生活用品",
       "price": 35,
@@ -76,7 +76,7 @@
       "nickname": "汉语言专业学生"
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "羽毛球拍单支带球",
       "category": "运动器材",
       "price": 42,
@@ -89,11 +89,76 @@
       "description": "拍子线完好，附赠3个羽毛球。",
       "publishTime": "2026-06-03 15:10",
       "nickname": "体育选修课学生"
+    },
+    {
+      "title": "保温杯",
+      "category": "生活用品",
+      "price": 20,
+      "condition": "正常使用痕迹",
+      "location": "东四",
+      "publisher": "当前用户",
+      "publishTime": "2026-06-30 14:59",
+      "image": "📦 生活用品",
+      "status": "open",
+      "description": "出正常使用痕迹水杯，保温功能良好，外表仅有一点瑕疵磕碰，质量非常好。因有新水杯就把这个出了。仅支持面交。",
+      "id": "AZcabdBnJ40"
+    },
+    {
+      "title": "保温杯",
+      "category": "生活用品",
+      "price": 20,
+      "condition": "正常使用痕迹",
+      "location": "东四楼下",
+      "publisher": "当前用户",
+      "publishTime": "2026-06-30 15:21",
+      "image": "📦 生活用品",
+      "status": "open",
+      "description": "仅支持面交",
+      "id": "aVAXdZY4dBM"
+    },
+    {
+      "title": "保温杯",
+      "category": "生活用品",
+      "price": 20,
+      "condition": "正常使用痕迹",
+      "location": "东四楼下",
+      "publisher": "当前用户",
+      "publishTime": "2026-06-30 15:49",
+      "image": "📦 生活用品",
+      "status": "open",
+      "description": "面交",
+      "id": "9BtuW00DNSs"
+    },
+    {
+      "title": "保温杯",
+      "category": "生活用品",
+      "price": 20,
+      "condition": "正常使用痕迹",
+      "location": "东四",
+      "publisher": "当前用户",
+      "publishTime": "2026-06-30 16:01",
+      "image": "📦 生活用品",
+      "status": "open",
+      "description": "面交",
+      "id": "t9jOS-v-y74"
+    },
+    {
+      "title": "黑色华硕笔记本电脑",
+      "category": "数码配件",
+      "price": 3000,
+      "condition": "正常使用痕迹",
+      "location": "东四楼下",
+      "publisher": "当前用户",
+      "publishTime": "2026-06-30 17:06",
+      "image": "📦 数码配件",
+      "status": "open",
+      "description": "质量可以",
+      "id": "XZE_kCN977E"
     }
   ],
   "lostFounds": [
     {
-      "id": 1,
+      "id": "1",
       "title": "寻找黑色校园卡",
       "type": "lost",
       "itemName": "校园卡",
@@ -107,7 +172,7 @@
       "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "拾到蓝色雨伞",
       "type": "found",
       "itemName": "雨伞",
@@ -121,7 +186,7 @@
       "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "丢失白色有线耳机",
       "type": "lost",
       "itemName": "有线耳机",
@@ -135,7 +200,7 @@
       "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "捡到一把钥匙串",
       "type": "found",
       "itemName": "钥匙",
@@ -149,7 +214,7 @@
       "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "遗失透明水杯",
       "type": "lost",
       "itemName": "塑料水杯",
@@ -163,7 +228,7 @@
       "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "捡到一本笔记本",
       "type": "found",
       "itemName": "笔记本",
@@ -175,11 +240,24 @@
       "publisher": "校园用户",
       "nickname": "失主",
       "image": "https://via.placeholder.com/520x320/fff7ed/7c5d4a?text=失物招领"
+    },
+    {
+      "title": "白色耳机",
+      "type": "lost",
+      "itemName": "白色耳机",
+      "location": "A教大门口",
+      "eventTime": "2026-06-30 16:02",
+      "contact": "站内消息联系",
+      "publisher": "当前用户",
+      "image": "🔍 白色耳机",
+      "status": "open",
+      "description": "重谢",
+      "id": "-A4OX0DLjqs"
     }
   ],
   "groupBuys": [
     {
-      "id": 1,
+      "id": "1",
       "title": "周五晚火锅拼单",
       "type": "拼餐",
       "targetCount": 6,
@@ -192,7 +270,7 @@
       "activityInfo": "拼单活动：周五晚火锅拼单，请在截止日期前参与，达到人数后统一组织。"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "四六级资料团购",
       "type": "学习资料",
       "targetCount": 10,
@@ -205,7 +283,7 @@
       "activityInfo": "拼单活动：四六级资料团购，请在截止日期前参与，达到人数后统一组织。"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "夏日西瓜团购批发",
       "type": "生鲜团购",
       "targetCount": 8,
@@ -218,7 +296,7 @@
       "activityInfo": "拼单活动：夏日西瓜团购批发，请在截止日期前参与，达到人数后统一组织。"
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "奶茶拼单满减活动",
       "type": "拼餐",
       "targetCount": 5,
@@ -231,7 +309,7 @@
       "activityInfo": "拼单活动：奶茶拼单满减活动，请在截止日期前参与，达到人数后统一组织。"
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "考研英语真题团购",
       "type": "学习资料",
       "targetCount": 12,
@@ -244,7 +322,7 @@
       "activityInfo": "拼单活动：考研英语真题团购，请在截止日期前参与，达到人数后统一组织。"
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "宿舍桶装水拼订",
       "type": "生活用品团购",
       "targetCount": 7,
@@ -255,11 +333,37 @@
       "status": "closed",
       "description": "一次性订十桶有优惠，凑单配送上门。",
       "activityInfo": "拼单活动：宿舍桶装水拼订，请在截止日期前参与，达到人数后统一组织。"
+    },
+    {
+      "title": "源麦田拼蛋糕",
+      "type": "拼餐",
+      "targetCount": 4,
+      "currentCount": 1,
+      "deadline": "2026-07-02 12:03",
+      "location": "川大店",
+      "publisher": "当前用户",
+      "image": "🧋 拼餐",
+      "status": "open",
+      "description": "运费需要A，口味必须接受榴莲",
+      "id": "MxbrlXlqdwk"
+    },
+    {
+      "title": "源麦田拼蛋糕",
+      "type": "拼餐",
+      "targetCount": 4,
+      "currentCount": 1,
+      "deadline": "2026-07-01 12:00",
+      "location": "川大店",
+      "publisher": "当前用户",
+      "image": "🧋 拼餐",
+      "status": "open",
+      "description": "需要可接受榴莲的宝子",
+      "id": "OscUFGO8rSM"
     }
   ],
   "errands": [
     {
-      "id": 1,
+      "id": "1",
       "title": "帮取快递到宿舍楼下",
       "taskType": "取快递",
       "reward": 3,
@@ -272,7 +376,7 @@
       "nickname": "西区学生"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "帮买一份晚餐",
       "taskType": "代买",
       "reward": 5,
@@ -285,7 +389,7 @@
       "nickname": "实验室学生"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "图书馆还书代办",
       "taskType": "代办跑腿",
       "reward": 2,
@@ -298,7 +402,7 @@
       "nickname": "有事外出学生"
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "代取美团外卖送至教室",
       "taskType": "取外卖",
       "reward": 4,
@@ -311,7 +415,7 @@
       "nickname": "上课赶不及学生"
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "代买文具送到宿舍",
       "taskType": "代买",
       "reward": 3.5,
@@ -324,7 +428,7 @@
       "nickname": "早起赶作业学生"
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "帮忙送物品到隔壁校区",
       "taskType": "跨校跑腿",
       "reward": 8,
@@ -335,6 +439,20 @@
       "status": "closed",
       "description": "小件文件，需要往返两校区递送。",
       "nickname": "跨校区同学"
+    },
+    {
+      "title": "代取快递小件",
+      "taskType": "取快递",
+      "reward": 2,
+      "from": "云立方",
+      "to": "东四楼下",
+      "deadline": "2026-06-30 18:00",
+      "publisher": "当前用户",
+      "image": "🏃 取快递",
+      "status": "open",
+      "description": "比较急",
+      "id": "l2Z90YudHPg"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

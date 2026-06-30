@@ -1,37 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { getMessages, type MessageItem } from '../api/message'
+import { computed } from 'vue'
 
-type MessageItem = {
-  id: number
-  sender: string
-  title: string
-  content: string
-  time: string
-}
-
-const messages = ref<MessageItem[]>([
-  {
-    id: 1,
-    sender: '系统通知',
-    title: '欢迎来到校园轻集市，我们已为你开启消息中心。',
-    content: '你可以点击消息查看详情，和同学进行快速沟通。',
-    time: '今天 14:35',
-  },
-  {
-    id: 2,
-    sender: '买家小李',
-    title: '你好，这个商品还能便宜一点吗？',
-    content: '我对你发布的二手书很感兴趣，想了解一下成色。',
-    time: '今天 13:12',
-  },
-  {
-    id: 3,
-    sender: '拼单发起人',
-    title: '拼单进度更新：已有 3 人参加',
-    content: '当前拼单人数已达 3 人，还剩 2 个名额，快来参加吧。',
-    time: '昨天 18:02',
-  },
-])
+const messages = computed<MessageItem[]>(() => getMessages())
 </script>
 
 <template>
@@ -63,7 +34,7 @@ const messages = ref<MessageItem[]>([
   font-size: 26px;
   color: #1f2937;
   margin-bottom: 24px;
-  border-left: 5px solid #409eff;
+  border-left: 5px solid #fb923c;
   padding-left: 12px;
 }
 .msg-list {
@@ -76,15 +47,16 @@ const messages = ref<MessageItem[]>([
   padding: 22px 24px;
   background: #ffffff;
   border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1.5px solid rgba(251, 146, 60, 0.18);
+  box-shadow: 0 10px 28px rgba(251, 146, 60, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   color: inherit;
   text-decoration: none;
 }
 .msg-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 16px 34px rgba(251, 146, 60, 0.18);
+  border-color: #fb923c;
 }
 .msg-top {
   display: flex;

@@ -1,111 +1,65 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { getTrades, type TradeItem } from '@/api/trade'
 import { getLostFounds, type LostFoundItem } from '@/api/lostFound'
 import { getGroupBuys, type GroupBuyItem } from '@/api/groupBuy'
 import { getErrands, type ErrandItem } from '@/api/errand'
-
-type MessageItem = {
-  id: number
-  sender: string
-  title: string
-  content: string
-  time: string
-}
+import { getMessages, type MessageItem } from '@/api/message'
 
 const route = useRoute()
 const targetId = Number(route.params.id)
 const itemType = String(route.meta.type || '')
-const tradeItem = ref<TradeItem | null>(null)
-const lostItem = ref<LostFoundItem | null>(null)
-const groupItem = ref<GroupBuyItem | null>(null)
-const errandItem = ref<ErrandItem | null>(null)
-const messageItem = ref<MessageItem | null>(null)
-const loading = ref(true)
-const notFound = ref(false)
 
-const messages: MessageItem[] = [
-  {
-    id: 1,
-    sender: '系统通知',
-    title: '欢迎使用校园轻集市消息中心',
-    content: '你现在可以查看详情、回复消息，并跟同学更便捷地沟通。',
-    time: '今天 14:35',
-  },
-  {
-    id: 2,
-    sender: '买家小李',
-    title: '你好，这个商品还能便宜一点吗？',
-    content: '我对你发布的二手书很感兴趣，想了解一下成色和取货方式。',
-    time: '今天 13:12',
-  },
-  {
-    id: 3,
-    sender: '拼单发起人',
-    title: '拼单进度更新：已有 3 人参加',
-    content: '当前拼单人数已达 3 人，还剩 2 个名额，欢迎继续邀请好友加入。',
-    time: '昨天 18:02',
-  },
-]
+// 安全解析图片字符串
+function parseImage(img: string | null | undefined): [string, string] {
+  if (!img || typeof img !== 'string') return ['📷', '暂无图片']
+  const parts = img.split(' ')
+  if (parts.length >= 2) {
+    return [parts[0] || '📷', parts.slice(1).join(' ')]
+  }
+  return ['📷', img]
+}
+
+// 根据 itemType 只查找对应类型的条目（避免多列表 ID 冲突）
+const tradeItem = ref<TradeItem | null>(
+  itemType === 'trade' ? (getTrades().find(item => item.id === targetId) ?? null) : null
+)
+const lostItem = ref<LostFoundItem | null>(
+  itemType === 'lostFound' ? (getLostFounds().find(item => item.id === targetId) ?? null) : null
+)
+const groupItem = ref<GroupBuyItem | null>(
+  itemType === 'groupBuy' ? (getGroupBuys().find(item => item.id === targetId) ?? null) : null
+)
+const errandItem = ref<ErrandItem | null>(
+  itemType === 'errand' ? (getErrands().find(item => item.id === targetId) ?? null) : null
+)
+const messageItem = ref<MessageItem | null>(
+  itemType === 'message' ? (getMessages().find(item => item.id === targetId) ?? null) : null
+)
+
+const notFound = !tradeItem.value && !lostItem.value && !groupItem.value && !errandItem.value && !messageItem.value
 
 const pageTitle = computed(() => {
   switch (itemType) {
-    case 'trade':
-      return '二手交易详情'
-    case 'lostFound':
-      return '失物招领详情'
-    case 'groupBuy':
-      return '拼单详情'
-    case 'errand':
-      return '跑腿详情'
-    case 'message':
-      return '消息详情'
-    default:
-      return '详情信息'
+    case 'trade': return '二手交易详情'
+    case 'lostFound': return '失物招领详情'
+    case 'groupBuy': return '拼单详情'
+    case 'errand': return '跑腿详情'
+    case 'message': return '消息详情'
+    default: return '详情信息'
   }
 })
 
 const basePath = computed(() => {
   switch (itemType) {
-    case 'trade':
-      return '/trade'
-    case 'lostFound':
-      return '/lost-found'
-    case 'groupBuy':
-      return '/group-buy'
-    case 'errand':
-      return '/errand'
-    case 'message':
-      return '/message'
-    default:
-      return '/'
+    case 'trade': return '/trade'
+    case 'lostFound': return '/lost-found'
+    case 'groupBuy': return '/group-buy'
+    case 'errand': return '/errand'
+    case 'message': return '/message'
+    default: return '/'
   }
-})
-
-onMounted(async () => {
-  if (itemType === 'trade') {
-    const res = await getTrades()
-    tradeItem.value = res.data.find(item => item.id === targetId) ?? null
-  }
-  if (itemType === 'lostFound') {
-    const res = await getLostFounds()
-    lostItem.value = res.data.find(item => item.id === targetId) ?? null
-  }
-  if (itemType === 'groupBuy') {
-    const res = await getGroupBuys()
-    groupItem.value = res.data.find(item => item.id === targetId) ?? null
-  }
-  if (itemType === 'errand') {
-    const res = await getErrands()
-    errandItem.value = res.data.find(item => item.id === targetId) ?? null
-  }
-  if (itemType === 'message') {
-    messageItem.value = messages.find(item => item.id === targetId) ?? null
-  }
-
-  notFound.value = !tradeItem.value && !lostItem.value && !groupItem.value && !errandItem.value && !messageItem.value
-  loading.value = false
 })
 </script>
 
@@ -114,12 +68,11 @@ onMounted(async () => {
     <h1 class="page-title">{{ pageTitle }}</h1>
     <router-link class="back-link" :to="basePath">返回列表</router-link>
 
-    <div v-if="loading" class="detail-status">加载中...</div>
-    <div v-else-if="notFound" class="detail-status">未找到该条信息</div>
+    <div v-if="notFound" class="detail-status">未找到该条信息</div>
 
     <div class="detail-card" v-else>
-      <template v-if="tradeItem">
-        <img v-if="tradeItem.image" :src="tradeItem.image" alt="商品图片" class="detail-image" />
+      <template v-if="itemType === 'trade' && tradeItem">
+        <div class="detail-image"><span class="detail-image__emoji">{{ parseImage(tradeItem.image)[0] }}</span><span class="detail-image__label">{{ parseImage(tradeItem.image)[1] }}</span></div>
         <div class="row-item">
           <span class="label">商品编号：</span>
           <span class="value">{{ tradeItem.id }}</span>
@@ -127,10 +80,6 @@ onMounted(async () => {
         <div class="row-item">
           <span class="label">商品名称：</span>
           <span class="value">{{ tradeItem.title }}</span>
-        </div>
-        <div class="row-item">
-          <span class="label">交易人：</span>
-          <span class="value">{{ tradeItem.nickname || tradeItem.publisher }}</span>
         </div>
         <div class="row-item">
           <span class="label">分类：</span>
@@ -154,7 +103,7 @@ onMounted(async () => {
         </div>
         <div class="row-item">
           <span class="label">发布时间：</span>
-          <span class="value">{{ tradeItem.publishTime || tradeItem.publishingTime }}</span>
+          <span class="value">{{ tradeItem.publishTime }}</span>
         </div>
         <div class="row-item">
           <span class="label">详情描述：</span>
@@ -162,15 +111,11 @@ onMounted(async () => {
         </div>
       </template>
 
-      <template v-else-if="lostItem">
-        <img v-if="lostItem.image" :src="lostItem.image" alt="失物图片" class="detail-image" />
+      <template v-else-if="itemType === 'lostFound' && lostItem">
+        <div class="detail-image"><span class="detail-image__emoji">{{ parseImage(lostItem.image)[0] }}</span><span class="detail-image__label">{{ parseImage(lostItem.image)[1] }}</span></div>
         <div class="row-item">
           <span class="label">编号：</span>
           <span class="value">{{ lostItem.id }}</span>
-        </div>
-        <div class="row-item">
-          <span class="label">昵称：</span>
-          <span class="value">{{ lostItem.nickname || lostItem.publisher }}</span>
         </div>
         <div class="row-item">
           <span class="label">标题：</span>
@@ -206,14 +151,11 @@ onMounted(async () => {
         </div>
       </template>
 
-      <template v-else-if="groupItem">
+      <template v-else-if="itemType === 'groupBuy' && groupItem">
+        <div class="detail-image"><span class="detail-image__emoji">{{ parseImage(groupItem.image)[0] }}</span><span class="detail-image__label">{{ parseImage(groupItem.image)[1] }}</span></div>
         <div class="row-item">
           <span class="label">编号：</span>
           <span class="value">{{ groupItem.id }}</span>
-        </div>
-        <div class="row-item">
-          <span class="label">活动说明：</span>
-          <span class="value">{{ groupItem.activityInfo || '本次活动由发起人统一协调，按人数完成后开始执行。' }}</span>
         </div>
         <div class="row-item">
           <span class="label">标题：</span>
@@ -249,14 +191,11 @@ onMounted(async () => {
         </div>
       </template>
 
-      <template v-else-if="errandItem">
+      <template v-else-if="itemType === 'errand' && errandItem">
+        <div class="detail-image"><span class="detail-image__emoji">{{ parseImage(errandItem.image)[0] }}</span><span class="detail-image__label">{{ parseImage(errandItem.image)[1] }}</span></div>
         <div class="row-item">
           <span class="label">编号：</span>
           <span class="value">{{ errandItem.id }}</span>
-        </div>
-        <div class="row-item">
-          <span class="label">昵称：</span>
-          <span class="value">{{ errandItem.nickname || errandItem.publisher }}</span>
         </div>
         <div class="row-item">
           <span class="label">标题：</span>
@@ -292,7 +231,7 @@ onMounted(async () => {
         </div>
       </template>
 
-      <template v-else-if="messageItem">
+      <template v-else-if="itemType === 'message' && messageItem">
         <div class="row-item">
           <span class="label">消息标题：</span>
           <span class="value">{{ messageItem.title }}</span>
@@ -316,59 +255,116 @@ onMounted(async () => {
 
 <style scoped>
 .page-wrap {
-  padding: 20px 0;
+  padding: 24px 8px;
 }
 .page-title {
-  font-size: 28px;
+  font-size: 26px;
+  font-weight: 700;
   color: #1f2937;
-  margin-bottom: 16px;
-  border-left: 5px solid #409eff;
-  padding-left: 12px;
+  margin: 0 0 12px;
+  border-left: 5px solid #fb923c;
+  padding-left: 14px;
 }
 .back-link {
   display: inline-block;
-  margin-bottom: 18px;
-  color: #2563eb;
+  margin-bottom: 20px;
+  color: #c2410c;
   font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 8px 16px;
+  background: #ffedd5;
+  border-radius: 10px;
+  transition: background 0.15s ease;
+}
+.back-link:hover {
+  background: #fed7aa;
 }
 .detail-status {
-  padding: 24px;
+  padding: 40px 24px;
   color: #64748b;
+  text-align: center;
+  font-size: 15px;
+  background: #fff;
+  border-radius: 16px;
+  margin-top: 16px;
 }
 .detail-card {
-  max-width: 680px;
-  padding: 28px;
+  max-width: 700px;
+  padding: 32px;
   background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 16px 44px rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 10px 32px rgba(251, 146, 60, 0.08);
+  border: 1.5px solid rgba(251, 146, 60, 0.15);
 }
 .detail-image {
   width: 100%;
-  height: 340px;
-  object-fit: cover;
+  height: 320px;
   border-radius: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+}
+.detail-image__emoji {
+  font-size: 96px;
+  line-height: 1;
+}
+.detail-image__label {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  color: #9a3412;
+  padding: 0 16px;
 }
 .row-item {
   display: flex;
-  padding: 14px 0;
-  border-bottom: 1px solid #f2f3f5;
+  padding: 16px 0;
+  border-bottom: 1px solid #f1f5f9;
+  gap: 16px;
 }
 .row-item:last-child {
   border-bottom: none;
 }
 .label {
-  width: 130px;
+  min-width: 120px;
   font-weight: 600;
-  color: #334155;
+  color: #78350f;
+  font-size: 14px;
+  flex-shrink: 0;
 }
 .value {
   color: #475569;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-size: 15px;
+  flex: 1;
+  word-break: break-word;
 }
 .price-text {
-  color: #ee6666;
+  color: #c2410c;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 17px;
+}
+
+@media (max-width: 600px) {
+  .detail-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+  .detail-image {
+    height: 240px;
+  }
+  .detail-image__emoji {
+    font-size: 72px;
+  }
+  .detail-image__label {
+    font-size: 18px;
+  }
+  .label {
+    min-width: 90px;
+  }
 }
 </style>

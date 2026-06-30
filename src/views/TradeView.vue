@@ -15,11 +15,11 @@
         <ItemCard
           :title="item.title"
           :subtitle="item.nickname || item.publisher"
-          :image="item.image || placeholderImage"
+          :image="item.image"
           :description="item.description"
           :tag="item.category"
           :location="item.location"
-          :time="item?.publishTime || item?.publishTime"
+          :time="item.publishTime"
         >
           <template #footer>
             <strong>￥{{ item.price }}</strong>
@@ -32,45 +32,54 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import ItemCard from '../components/ItemCard.vue'
 import { getTrades, type TradeItem } from '../api/trade'
 
-const trades = ref<TradeItem[]>([])
-const placeholderImage = 'https://via.placeholder.com/520x320/ebf4ff/7c7c7c?text=暂无+图片'
-
-onMounted(async () => {
-  const res = await getTrades()
-  trades.value = res.data
-})
+const trades = ref<TradeItem[]>(getTrades())
 </script>
 
 <style scoped>
 .page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
+  padding: 0 8px;
 }
 
 .page-header {
-  padding: 24px;
-  border-radius: 16px;
-  background: #fff;
+  padding: 28px 32px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ffffff 0%, #fed7aa 100%);
+  border: 1px solid rgba(251, 146, 60, 0.15);
+  box-shadow: 0 2px 12px rgba(251, 146, 60, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.page-header::before {
+  content: '📦';
+  font-size: 44px;
 }
 
 .page-header h1 {
-  margin: 0 0 8px;
+  margin: 0 0 4px;
+  font-size: 22px;
+  color: #9a3412;
+  font-weight: 700;
 }
 
 .page-header p {
   margin: 0;
-  color: #6b7280;
+  color: #78716c;
+  font-size: 14px;
 }
 
 .list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 18px;
 }
 
 .card-link {
@@ -79,12 +88,22 @@ onMounted(async () => {
   text-decoration: none;
 }
 
-.card-link:hover .item-card {
-  transform: translateY(-4px);
-}
-
 .condition {
   margin-left: 12px;
-  color: #6b7280;
+  color: #64748b;
+  font-size: 13px;
+  padding: 3px 10px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+@media (max-width: 720px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
+  .page-header {
+    padding: 24px;
+  }
 }
 </style>

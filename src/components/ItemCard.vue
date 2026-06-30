@@ -1,6 +1,6 @@
 <template>
   <article class="item-card">
-    <img v-if="image" :src="image" alt="卡片图片" class="item-card__image" />
+    <div class="item-card__image"><span class="emoji">{{ imageText[0] || '📷' }}</span><span class="label">{{ imageText[1] || '暂无图片' }}</span></div>
 
     <div class="item-card__header">
       <div>
@@ -24,7 +24,9 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue'
+
+const props = defineProps<{
   title: string
   description: string
   tag?: string
@@ -33,71 +35,110 @@ defineProps<{
   location?: string
   time?: string
 }>()
+
+// 安全地解析 "emoji 文字" 格式
+const imageText = computed(() => {
+  if (!props.image) return ['📦', '商品图片']
+  const parts = props.image.split(' ')
+  if (parts.length >= 2) {
+    return [parts[0] || '📦', parts.slice(1).join(' ')]
+  }
+  return ['📦', props.image]
+})
 </script>
 
 <style scoped>
 .item-card {
   overflow: hidden;
-  border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 20px;
+  border: 1.5px solid rgba(226, 232, 240, 0.8);
   background: #ffffff;
-  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.06);
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.06);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 }
 
 .item-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 20px 48px rgba(251, 146, 60, 0.18);
+  border-color: #fb923c;
 }
 
 .item-card__image {
   width: 100%;
   height: 180px;
-  object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+  padding: 20px;
+}
+.item-card__image .emoji {
+  font-size: 64px;
+  line-height: 1;
+}
+.item-card__image .label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #9a3412;
+  text-align: center;
+  padding: 0 8px;
 }
 
 .item-card__header {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
   align-items: flex-start;
-  padding: 18px 18px 8px;
+  padding: 22px 22px 12px;
 }
 
 .item-card h3 {
   margin: 0;
   font-size: 18px;
+  color: #1e293b;
+  font-weight: 600;
 }
 
 .subtitle {
-  margin: 6px 0 0;
+  margin: 8px 0 0;
   color: #64748b;
   font-size: 13px;
 }
 
 .tag {
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 999px;
-  background: rgba(51, 102, 255, 0.12);
-  color: #1d4ed8;
+  background: #ffedd5;
+  color: #9a3412;
   font-size: 12px;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .description {
-  margin: 12px 0;
-  color: #4b5563;
-  line-height: 1.6;
+  margin: 10px 22px;
+  padding: 10px 0;
+  color: #475569;
+  line-height: 1.7;
+  border-top: 1px dashed #e2e8f0;
+  font-size: 14px;
 }
 
 .meta {
   display: flex;
-  gap: 16px;
-  color: #6b7280;
+  gap: 18px;
+  color: #64748b;
   font-size: 13px;
+  padding: 0 22px;
+  margin-bottom: 12px;
 }
 
 .footer {
-  margin-top: 12px;
+  padding: 12px 22px 22px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
 }
 </style>
