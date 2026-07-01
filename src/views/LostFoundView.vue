@@ -18,6 +18,21 @@
           <div class="goods-meta">昵称：{{ item.nickname || item.publisher || '失主' }}</div>
           <div class="goods-meta">地点：{{ item.location }}</div>
           <div class="goods-desc">{{ item.description }}</div>
+          <div class="goods-actions">
+            <button
+              class="favorite-btn"
+              :class="{ active: favoriteStore.isFavorite('lostFound', item.id) }"
+              @click.stop.prevent="favoriteStore.toggleFavorite({
+                id: item.id,
+                type: 'lostFound',
+                title: item.title,
+                description: item.description,
+                location: item.location
+              })"
+            >
+              {{ favoriteStore.isFavorite('lostFound', item.id) ? '★ 已收藏' : '☆ 收藏' }}
+            </button>
+          </div>
         </div>
       </router-link>
     </div>
@@ -27,6 +42,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { getLostFounds, type LostFoundItem } from '@/api/lostFound'
+import { useFavoriteStore } from '../stores/favorite'
+
+const favoriteStore = useFavoriteStore()
 
 // 安全地解析图片字符串
 function parseImage(img: string | null | undefined): [string, string] {
@@ -159,6 +177,34 @@ onMounted(async () => {
   margin-top: 12px;
   padding-top: 12px;
   border-top: 1px dashed #e2e8f0;
+}
+
+.goods-actions {
+  padding: 14px 22px 22px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.favorite-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 7px 16px;
+  cursor: pointer;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.favorite-btn:hover {
+  background: #e5e7eb;
+}
+
+.favorite-btn.active {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+  color: #fff;
 }
 
 @media (max-width: 720px) {

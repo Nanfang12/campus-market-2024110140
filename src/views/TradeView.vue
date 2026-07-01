@@ -24,6 +24,19 @@
           <template #footer>
             <strong>￥{{ item.price }}</strong>
             <span class="condition">{{ item.condition }}</span>
+            <button
+              class="favorite-btn"
+              :class="{ active: favoriteStore.isFavorite('trade', item.id) }"
+              @click.stop.prevent="favoriteStore.toggleFavorite({
+                id: item.id,
+                type: 'trade',
+                title: item.title,
+                description: item.description,
+                location: item.location
+              })"
+            >
+              {{ favoriteStore.isFavorite('trade', item.id) ? '★ 已收藏' : '☆ 收藏' }}
+            </button>
           </template>
         </ItemCard>
       </router-link>
@@ -35,6 +48,9 @@
 import { onMounted, ref } from 'vue'
 import ItemCard from '../components/ItemCard.vue'
 import { getTrades, type TradeItem } from '../api/trade'
+import { useFavoriteStore } from '../stores/favorite'
+
+const favoriteStore = useFavoriteStore()
 
 const trades = ref<TradeItem[]>([])
 const loading = ref(true)
@@ -107,6 +123,28 @@ onMounted(async () => {
   background: #f1f5f9;
   border-radius: 8px;
   font-weight: 500;
+}
+
+.favorite-btn {
+  margin-left: auto;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.favorite-btn:hover {
+  background: #e5e7eb;
+}
+
+.favorite-btn.active {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+  color: #fff;
 }
 
 @media (max-width: 720px) {

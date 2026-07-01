@@ -1,7 +1,7 @@
 import http from './http'
 
 export interface LostFoundItem {
-  id?: number | string
+  id: number | string
   title: string
   type: 'lost' | 'found'
   itemName: string
@@ -23,4 +23,7 @@ export async function getLostFounds(): Promise<LostFoundItem[]> {
 export async function createLostFound(data: Omit<LostFoundItem, 'id'>): Promise<LostFoundItem> {
   const response = await http.post<LostFoundItem>('/lostFounds', data)
   return response.data
+}
+export async function deleteLostFound(id: number | string) {
+  await http.delete('/lostFounds/' + String(id))
 }

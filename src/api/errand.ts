@@ -1,7 +1,7 @@
 import http from './http'
 
 export interface ErrandItem {
-  id?: number | string
+  id: number | string
   title: string
   taskType: string
   reward: number
@@ -23,4 +23,7 @@ export async function getErrands(): Promise<ErrandItem[]> {
 export async function createErrand(data: Omit<ErrandItem, 'id'>): Promise<ErrandItem> {
   const response = await http.post<ErrandItem>('/errands', data)
   return response.data
+}
+export async function deleteErrand(id: number | string) {
+  await http.delete('/errands/' + String(id))
 }

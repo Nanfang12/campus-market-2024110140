@@ -97,45 +97,6 @@
       "condition": "正常使用痕迹",
       "location": "东四",
       "publisher": "当前用户",
-      "publishTime": "2026-06-30 14:59",
-      "image": "📦 生活用品",
-      "status": "open",
-      "description": "出正常使用痕迹水杯，保温功能良好，外表仅有一点瑕疵磕碰，质量非常好。因有新水杯就把这个出了。仅支持面交。",
-      "id": "AZcabdBnJ40"
-    },
-    {
-      "title": "保温杯",
-      "category": "生活用品",
-      "price": 20,
-      "condition": "正常使用痕迹",
-      "location": "东四楼下",
-      "publisher": "当前用户",
-      "publishTime": "2026-06-30 15:21",
-      "image": "📦 生活用品",
-      "status": "open",
-      "description": "仅支持面交",
-      "id": "aVAXdZY4dBM"
-    },
-    {
-      "title": "保温杯",
-      "category": "生活用品",
-      "price": 20,
-      "condition": "正常使用痕迹",
-      "location": "东四楼下",
-      "publisher": "当前用户",
-      "publishTime": "2026-06-30 15:49",
-      "image": "📦 生活用品",
-      "status": "open",
-      "description": "面交",
-      "id": "9BtuW00DNSs"
-    },
-    {
-      "title": "保温杯",
-      "category": "生活用品",
-      "price": 20,
-      "condition": "正常使用痕迹",
-      "location": "东四",
-      "publisher": "当前用户",
       "publishTime": "2026-06-30 16:01",
       "image": "📦 生活用品",
       "status": "open",
@@ -475,6 +436,13 @@
       "title": "拼单进度更新：已有 3 人参加",
       "content": "当前拼单人数已达 3 人，还剩 2 个名额，快来参加吧。",
       "time": "2026-06-29 18:02"
+    },
+    {
+      "sender": "系统通知",
+      "title": "📦 二手商品发布成功",
+      "content": "你发布的《碎花连衣裙》已上架校园集市，售价 ¥30，同学现在可以浏览并联系你了。",
+      "time": "2026/7/1 11:29:02",
+      "id": "pitYYuI8cPE"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

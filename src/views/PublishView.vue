@@ -8,6 +8,9 @@ import { createLostFound } from '../api/lostFound'
 import { createGroupBuy } from '../api/groupBuy'
 import { createErrand } from '../api/errand'
 import { pushMessage } from '../api/message'
+import { useUserStore } from '../stores/user'
+
+const userStore = useUserStore()
 
 type PublishType = 'trade' | 'lostFound' | 'groupBuy' | 'errand'
 
@@ -146,7 +149,7 @@ async function handleSubmit() {
         price: Number(form.price),
         condition: form.condition,
         location: form.location,
-        publisher: '当前用户',
+        publisher: userStore.displayName,
         publishTime: getCurrentTime(),
         image: '📦 ' + (form.category || form.title.slice(0, 6) || '闲置物品'),
         status: 'open',
@@ -168,7 +171,7 @@ async function handleSubmit() {
         location: form.location,
         eventTime: formatTime(form.eventTime),
         contact: '站内消息联系',
-        publisher: '当前用户',
+        publisher: userStore.displayName,
         image: form.lostFoundType === 'lost' ? '🔍 ' + (form.itemName || '寻找物品') : '🔎 ' + (form.itemName || '拾到物品'),
         status: 'open',
         description: form.description,
@@ -189,7 +192,7 @@ async function handleSubmit() {
         currentCount: 1,
         deadline: formatTime(form.deadline),
         location: form.location,
-        publisher: '当前用户',
+        publisher: userStore.displayName,
         image: '🧋 ' + (form.groupType || form.title.slice(0, 6) || '校园拼单'),
         status: 'open',
         description: form.description,
@@ -210,7 +213,7 @@ async function handleSubmit() {
         from: form.from,
         to: form.to,
         deadline: formatTime(form.deadline),
-        publisher: '当前用户',
+        publisher: userStore.displayName,
         image: '🏃 ' + (form.taskType || '跑腿任务'),
         status: 'open',
         description: form.description,

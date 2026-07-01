@@ -19,11 +19,20 @@
         <RouterLink to="/message" class="btn-icon" title="消息">
           <span class="icon">💬</span>
         </RouterLink>
-        <RouterLink to="/user" class="btn-icon" title="我的">👤</RouterLink>
+        <RouterLink to="/user" class="user-mini" title="个人中心">
+          <span class="user-avatar">👤</span>
+          <span class="user-name">{{ userStore.displayName }}</span>
+        </RouterLink>
       </div>
     </div>
   </header>
 </template>
+
+<script setup lang="ts">
+import { useUserStore } from '../stores/user'
+
+const userStore = useUserStore()
+</script>
 
 <style scoped>
 .app-header {
@@ -136,5 +145,38 @@
 
 .btn-icon:hover {
   background: #fff7ed;
+}
+
+.user-mini {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 8px;
+  border-radius: 999px;
+  background: #fff7ed;
+  text-decoration: none;
+  color: #c2410c;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s ease;
+}
+
+.user-mini:hover {
+  background: #ffedd5;
+}
+
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fff;
+  font-size: 16px;
+}
+
+.user-name {
+  white-space: nowrap;
 }
 </style>

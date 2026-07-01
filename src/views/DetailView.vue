@@ -6,10 +6,36 @@ import { getLostFounds, type LostFoundItem } from '@/api/lostFound'
 import { getGroupBuys, type GroupBuyItem } from '@/api/groupBuy'
 import { getErrands, type ErrandItem } from '@/api/errand'
 import { getMessages, type MessageItem } from '@/api/message'
+import { useFavoriteStore, type FavoriteType } from '@/stores/favorite'
 
+// 页面支持的全部类型（消息不参与收藏）
+type PageType = FavoriteType | 'message' | ''
+
+const favoriteStore = useFavoriteStore()
 const route = useRoute()
-const targetId = String(route.params.id)
-const itemType = String(route.meta.type || '')
+
+// 把 params.id 规范化成单个 string（防止是 string[] 的情况）
+const rawId = Array.isArray(route.params.id) ? route.params.id[0] : String(route.params.id || '')
+// meta.type 规范化成单个 string
+const rawType = Array.isArray(route.meta.type) ? String(route.meta.type[0] || '') : String(route.meta.type || '')
+
+// 类型守卫：确认是合法的页面类型
+const itemType = computed<PageType>(() => {
+  const t = rawType
+  if (t === 'trade' || t === 'lostFound' || t === 'groupBuy' || t === 'errand' || t === 'message') {
+    return t as PageType
+  }
+  return ''
+})
+
+// 收藏类型：只有四类业务信息才支持收藏
+const favoriteType = computed<FavoriteType | ''>(() => {
+  const t = itemType.value
+  if (t === 'trade' || t === 'lostFound' || t === 'groupBuy' || t === 'errand') {
+    return t as FavoriteType
+  }
+  return ''
+})
 
 // 安全解析图片字符串
 function parseImage(img: string | null | undefined): [string, string] {
@@ -30,21 +56,21 @@ const loaded = ref(false)
 
 onMounted(async () => {
   try {
-    if (itemType === 'trade') {
+    if (itemType.value === 'trade') {
       const list = await getTrades()
-      tradeItem.value = list.find((item) => String(item.id) === targetId) ?? null
-    } else if (itemType === 'lostFound') {
+      tradeItem.value = list.find((item) => String(item.id) === rawId) ?? null
+    } else if (itemType.value === 'lostFound') {
       const list = await getLostFounds()
-      lostItem.value = list.find((item) => String(item.id) === targetId) ?? null
-    } else if (itemType === 'groupBuy') {
+      lostItem.value = list.find((item) => String(item.id) === rawId) ?? null
+    } else if (itemType.value === 'groupBuy') {
       const list = await getGroupBuys()
-      groupItem.value = list.find((item) => String(item.id) === targetId) ?? null
-    } else if (itemType === 'errand') {
+      groupItem.value = list.find((item) => String(item.id) === rawId) ?? null
+    } else if (itemType.value === 'errand') {
       const list = await getErrands()
-      errandItem.value = list.find((item) => String(item.id) === targetId) ?? null
-    } else if (itemType === 'message') {
+      errandItem.value = list.find((item) => String(item.id) === rawId) ?? null
+    } else if (itemType.value === 'message') {
       const list = await getMessages()
-      messageItem.value = list.find((item) => String(item.id) === targetId) ?? null
+      messageItem.value = list.find((item) => String(item.id) === rawId) ?? null
     }
   } catch {
     // 静默处理
@@ -53,12 +79,21 @@ onMounted(async () => {
   }
 })
 
+// 从加载到的对象里取真实 id（与列表页一致，保持原始 number|string 类型）
+const currentItemId = computed<number | string | null>(() => {
+  if (tradeItem.value) return tradeItem.value.id
+  if (lostItem.value) return lostItem.value.id
+  if (groupItem.value) return groupItem.value.id
+  if (errandItem.value) return errandItem.value.id
+  return null
+})
+
 const notFound = computed(
-  () => loaded.value && !tradeItem.value && !lostItem.value && !groupItem.value && !errandItem.value && !messageItem.value
+  () => loaded.value && currentItemId.value === null && !messageItem.value
 )
 
 const pageTitle = computed(() => {
-  switch (itemType) {
+  switch (itemType.value) {
     case 'trade': return '二手交易详情'
     case 'lostFound': return '失物招领详情'
     case 'groupBuy': return '拼单详情'
@@ -69,7 +104,7 @@ const pageTitle = computed(() => {
 })
 
 const basePath = computed(() => {
-  switch (itemType) {
+  switch (itemType.value) {
     case 'trade': return '/trade'
     case 'lostFound': return '/lost-found'
     case 'groupBuy': return '/group-buy'
@@ -78,6 +113,47 @@ const basePath = computed(() => {
     default: return '/'
   }
 })
+
+// 给详情页用的收藏信息聚合
+const favoriteInfo = computed(() => {
+  let title = ''
+  let description = ''
+  let location: string | undefined = undefined
+  if (tradeItem.value) {
+    title = tradeItem.value.title
+    description = tradeItem.value.description
+    location = tradeItem.value.location
+  } else if (lostItem.value) {
+    title = lostItem.value.title
+    description = lostItem.value.description
+    location = lostItem.value.location
+  } else if (groupItem.value) {
+    title = groupItem.value.title
+    description = groupItem.value.description
+    location = groupItem.value.location
+  } else if (errandItem.value) {
+    title = errandItem.value.title
+    description = errandItem.value.description
+    location = `${errandItem.value.from} → ${errandItem.value.to}`
+  }
+  return { title, description, location }
+})
+
+const isFavorited = computed(() => {
+  if (!favoriteType.value || currentItemId.value === null) return false
+  return favoriteStore.isFavorite(favoriteType.value, currentItemId.value)
+})
+
+function toggleFavorite() {
+  if (!favoriteType.value || currentItemId.value === null) return
+  favoriteStore.toggleFavorite({
+    id: currentItemId.value,
+    type: favoriteType.value,
+    title: favoriteInfo.value.title,
+    description: favoriteInfo.value.description,
+    location: favoriteInfo.value.location,
+  })
+}
 </script>
 
 <template>
@@ -266,6 +342,17 @@ const basePath = computed(() => {
           <span class="value">{{ messageItem.content }}</span>
         </div>
       </template>
+
+      <!-- 收藏按钮：仅对四类业务信息显示 -->
+      <div v-if="itemType !== 'message' && itemType !== '' && !notFound" class="favorite-bar">
+        <button
+          class="favorite-btn-detail"
+          :class="{ active: isFavorited }"
+          @click="toggleFavorite"
+        >
+          {{ isFavorited ? '★ 已收藏' : '☆ 点击收藏' }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -343,7 +430,7 @@ const basePath = computed(() => {
   border-bottom: 1px solid #f1f5f9;
   gap: 16px;
 }
-.row-item:last-child {
+.row-item:last-of-type {
   border-bottom: none;
 }
 .label {
@@ -366,6 +453,39 @@ const basePath = computed(() => {
   font-size: 17px;
 }
 
+/* 详情页收藏按钮栏 */
+.favorite-bar {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px dashed #fed7aa;
+  display: flex;
+  justify-content: center;
+}
+
+.favorite-btn-detail {
+  padding: 12px 36px;
+  border-radius: 999px;
+  border: 1.5px solid #fb923c;
+  background: #fff;
+  color: #ea580c;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.favorite-btn-detail:hover {
+  background: #fff7ed;
+  transform: translateY(-1px);
+}
+
+.favorite-btn-detail.active {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(251, 146, 60, 0.3);
+}
+
 @media (max-width: 600px) {
   .detail-card {
     padding: 20px;
@@ -382,6 +502,10 @@ const basePath = computed(() => {
   }
   .label {
     min-width: 90px;
+  }
+  .favorite-btn-detail {
+    width: 100%;
+    padding: 14px 24px;
   }
 }
 </style>

@@ -18,6 +18,21 @@
         <div class="goods-info">路线：{{ item.from }} → {{ item.to }}</div>
         <div class="goods-info">截止时间：{{ item.deadline }}</div>
         <div class="goods-desc">{{ item.description }}</div>
+        <div class="goods-actions">
+          <button
+            class="favorite-btn"
+            :class="{ active: favoriteStore.isFavorite('errand', item.id) }"
+            @click.stop.prevent="favoriteStore.toggleFavorite({
+              id: item.id,
+              type: 'errand',
+              title: item.title,
+              description: item.description,
+              location: item.from + ' → ' + item.to
+            })"
+          >
+            {{ favoriteStore.isFavorite('errand', item.id) ? '★ 已收藏' : '☆ 收藏' }}
+          </button>
+        </div>
       </router-link>
     </div>
   </section>
@@ -26,6 +41,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { getErrands, type ErrandItem } from '@/api/errand'
+import { useFavoriteStore } from '../stores/favorite'
+
+const favoriteStore = useFavoriteStore()
 
 // 安全地解析图片字符串（emoji + 文字）
 function parseImage(img: string | null | undefined): [string, string] {
@@ -159,9 +177,36 @@ onMounted(async () => {
   font-size: 14px;
   color: #64748b;
   line-height: 1.7;
-  margin: 12px 20px 20px;
+  margin: 12px 20px 10px;
   padding-top: 10px;
   border-top: 1px dashed #e2e8f0;
+}
+
+.goods-actions {
+  padding: 8px 20px 22px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.favorite-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 7px 16px;
+  cursor: pointer;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.favorite-btn:hover {
+  background: #e5e7eb;
+}
+
+.favorite-btn.active {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+  color: #fff;
 }
 
 @media (max-width: 720px) {

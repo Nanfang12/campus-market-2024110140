@@ -19,10 +19,10 @@ onMounted(async () => {
     getGroupBuys(),
     getErrands()
   ])
-  tradeTotal.value = resTrade.data.length
-  lostFoundTotal.value = resLost.data.length
-  groupBuyTotal.value = resGroup.data.length
-  errandTotal.value = resErrand.data.length
+  tradeTotal.value = resTrade.length
+  lostFoundTotal.value = resLost.length
+  groupBuyTotal.value = resGroup.length
+  errandTotal.value = resErrand.length
 })
 </script>
 
